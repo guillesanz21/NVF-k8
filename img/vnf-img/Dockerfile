@@ -1,4 +1,7 @@
 FROM ubuntu:20.04
+# variables to automatically install tzdata 
+ARG DEBIAN_FRONTEND=noninteractive
+ENV TZ=Europe/Madrid
 # install required packages
 RUN apt-get clean
 RUN apt-get update \
@@ -17,8 +20,12 @@ RUN apt-get update \
     openvswitch-common \
     iperf3 \
     iproute2 \
-    vim
+    vim \
+    ryu-bin \
+    arpwatch
 
 COPY vnx_config_nat /usr/bin/
 COPY isc-dhcp-server /etc/default/isc-dhcp-server
 COPY dhcpd.conf /etc/dhcp/dhcpd.conf 
+COPY README.txt /home/README.txt
+COPY qos_simple_switch_13.py /home/qos_simple_switch_13.py
