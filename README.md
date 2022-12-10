@@ -24,14 +24,6 @@ En el fichero `doc/Enunciado.pdf` se encuentra el enunciado del trabajo.
 5. Ejecutar `init.sh` desde **RDSV-OSM**
 6. Ejecutar `source .env` dede **RDSV-OSM** para exportar al entorno las variables creadas en el script anterior.
 
-Nota: las variables OSMNS, ACCXPOD y CPEXPOD no se exportarán al environment. Si se necesitan, hay que conseguirlas a mano:
-- OSMNS=7b2950d8-f92b-4041-9a55-8d1837ad7b0a
-- kubectl -n $OSMNS get pods
-    * CPE1POD=\<Primer ID>
-    * ACC1POD=\<Segundo ID>
-    * CPE2POD=\<Tercer ID>
-    * ACC2POD=\<Cuarto ID>
-
 ### `vbstart.sh` script
 
 Este script arranca las máquinas virtualbox. Ejecutar desde el **PC anfitrión**.

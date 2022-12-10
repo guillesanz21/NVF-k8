@@ -30,6 +30,24 @@ exportVar OSMNS 7b2950d8-f92b-4041-9a55-8d1837ad7b0a    # Parece que siempre es 
 
 # TODO:
 
+# 1. Repasar prácticas 2.1 y 2.2
+#   1.1. Analizar opciones de ryu. Como añadir reglas y todo eso.
+#   1.2. Simultaneamente tener en el portatil la practica 2.1 y en este PC la practica final
+# 2. Configurar ryu (Openflow) en KNF:access (kubctl) y tratar de automatizar los pasos en este script
+#   2.1. Arrancar ryu con el script que hice para 2.2
+#   2.2. Probar conectividad con ping entre h11 y servidor
+#   2.3. Arrancar whireshark en RDSV-K8S y analizar interfaces correspondientes
+#   2.4. Analizar tablas de flujos
+# 3. ARPWATCH en KNF:CPE
+#   3.1. Enterarse de que es ARPWATCH y como funciona
+#   3.2. Desde kubtcl ir probando el comando
+#   3.3. Configurarlo y automatizarlo en este script
+# 4. Repasar práctica 2.4 (QoS).
+#   4.1. En el portatil y luego tener simultaneamente ambos PCs
+#   4.2. Con kubctl realizar los cambios
+#   4.3. Testear con iperf desde h11 hacia ¿h21?
+#   4.4. Automatizar
+
 # IP LINKS
 
 # root@helmchartrepo-accesschart-0039730356-76f9f6b8f9-2jjt2:/# ip -d link show vxlanacc
