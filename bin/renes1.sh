@@ -1,6 +1,11 @@
 #!/bin/bash
 
 export OSMNS  # needs to be defined in calling shell
+if [[ -z ${OSMNS} ]]; then
+    set -a
+    . .env
+    set +a
+fi
 
 maxSecondsWaiting=80
 secondsInterval=4
