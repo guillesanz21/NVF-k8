@@ -28,4 +28,6 @@ COPY vnx_config_nat /usr/bin/
 COPY isc-dhcp-server /etc/default/isc-dhcp-server
 COPY dhcpd.conf /etc/dhcp/dhcpd.conf 
 COPY README.txt /home/README.txt
-COPY qos_simple_switch_13.py /home/qos_simple_switch_13.py
+# COPY qos_simple_switch_13.py /home/qos_simple_switch_13.py
+
+RUN sed '/OFPFlowMod(/,/)/s/)/, table_id=1)/' usr/lib/python3/dist-packages/ryu/app/simple_switch_13.py > /home/qos_simple_switch_13.py

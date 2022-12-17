@@ -10,6 +10,6 @@ fi
 if [[ -z ${1} ]]; then
     echo "ksh [CPE1, CPE2, ACC1, ACC2]"
 else
-    POD="${1}POD"
+    POD=$(eval echo \${${1}POD})
     kubectl exec -n $OSMNS -it ${POD} -- /bin/bash
 fi

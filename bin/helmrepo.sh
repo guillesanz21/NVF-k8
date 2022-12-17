@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # Crear K8s repos con info helm
-echo "\nRegistrando el repositorio de helm charts..."
+echo ""
+echo "Registrando el repositorio de helm charts..."
 REPOHELM=$(osm repo-list | grep -c helmchartrepo)
 if [[ ${REPOHELM} -eq 0 ]]; then
     echo "... Registrando repositorio helmchartrepo"

@@ -1,7 +1,8 @@
 #!/bin/bash
 
 # Añadir paquetes a OSM Packages VNF y NS
-echo "\nInstalando los descriptores (VNF y NS) en OSM..."
+echo ""
+echo "Instalando los descriptores (VNF y NS) en OSM..."
 # VNF
 VNFAccess=$(osm vnfpkg-list | grep -c access)
 if [[ ${VNFAccess} -eq 0 ]]; then
@@ -19,3 +20,4 @@ if [[ ${NS} -eq 0 ]]; then
     echo "... Instalando descriptor NS RENES"
     osm nspkg-create ./pck/renes_ns.tar.gz
 fi
+echo "Hecho"

@@ -32,8 +32,8 @@ if [[ ! $VCPE =~ "helmchartrepo-cpechart"  ]]; then
     exit 1
 fi
 
-ACC_EXEC="$KUBECTL exec -n $OSMNS $VACC --"
-CPE_EXEC="$KUBECTL exec -n $OSMNS $VCPE --"
+export ACC_EXEC="$KUBECTL exec -n $OSMNS $VACC --"
+export CPE_EXEC="$KUBECTL exec -n $OSMNS $VCPE --"
 
 # Router por defecto en red residencial
 VCPEPRIVIP="192.168.255.1"
@@ -57,16 +57,6 @@ $CPE_EXEC service openvswitch-switch start
 ### 3. En VNF:access agregar un bridge y configurar IPs y rutas
 echo "## 3. En VNF:access agregar un bridge y configurar IPs y rutas"
 $ACC_EXEC ovs-vsctl add-br brint
-
-# <--- SDN Ryu
-# $ACC_EXEC ovs-vsctl set bridge brint protocols=OpenFlow13
-# $ACC_EXEC ovs-vsctl set-fail-mode brint secure
-# $ACC_EXEC ovs-vsctl set bridge brint other-config:datapath-id=0000000000000001
-# $ACC_EXEC ovs-vsctl set-controller brint tcp:127.0.0.1:6633
-# $ACC_EXEC ovs-vsctl set-manager ptcp:6632
-# $ACC_EXEC ryu-manager ryu.app.rest_qos ryu.app.rest_conf_switch /usr/lib/python3/dist-packages/ryu/app/qos_simple_switch_13.py &
-# <--- SDN Ryu
-
 $ACC_EXEC ifconfig net1 $VNFTUNIP/24
 # $ACC_EXEC ovs-vsctl add-port brint vxlanacc -- set interface vxlanacc type=vxlan options:remote_ip=$HOMETUNIP
 # $ACC_EXEC ovs-vsctl add-port brint vxlanint -- set interface vxlanint type=vxlan options:remote_ip=$IPCPE options:key=inet options:dst_port=8742
@@ -100,3 +90,11 @@ sleep 10
 ### 6. En VNF:cpe activar NAT para dar salida a Internet
 echo "## 6. En VNF:cpe activar NAT para dar salida a Internet"
 $CPE_EXEC /usr/bin/vnx_config_nat brint net1
+
+### 7. En VNF:access configurar el controlador SDN Ryu y aplicar QoS
+echo "7. En VNF:access configurar el controlador SDN Ryu y aplicar QoS"
+./bin/ryu_qos.sh
+
+### 8. En VNF:cpe activar la captura de trafico ARP mediante arpwatch
+echo "8. En VNF:cpe activar la captura de trafico ARP mediante arpwatch"
+# ./bin/arpwatch.sh

@@ -20,17 +20,18 @@ function exportVar () {
 
 
 ####### * CREACIÓN DE INSTANCIA ########
-echo "\nCreando instancia RENES 2..."
+echo ""
+echo "Creando instancia RENES 2..."
 function renes2 () {
     ### Creación de instancia de servicio
     NSID2=$(osm ns-create --ns_name renes2 --nsd_name renes --vim_account dummy_vim)
 
     ### Recuperar status de la instancia
-    STATUS=$(osm ns-show ${NSID2} --literal | grep nsState | awk '{i++}i==2' | awk '{split($0,a,":");print a[2]}')   
+    STATUS=$(osm ns-show ${NSID2} --literal | grep nsState | awk '{i++}i==2' | awk '{split($0,a,": ");print a[2]}')   
     count=1
     while [[ "$STATUS" =~ .*"BUILDING".* && count -lt maxWaitingCycles ]]; do
         echo "...Esperando a que la instancia renes2 esté completamente operativa..."
-        STATUS=$(osm ns-show ${NSID2} --literal | grep nsState | awk '{i++}i==2' | awk '{split($0,a,":");print a[2]}')
+        STATUS=$(osm ns-show ${NSID2} --literal | grep nsState | awk '{i++}i==2' | awk '{split($0,a,": ");print a[2]}')
         sleep ${secondsInterval}
         count=$((count+1))
     done
