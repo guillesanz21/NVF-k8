@@ -24,20 +24,53 @@ En el fichero `doc/Enunciado.pdf` se encuentra el enunciado del trabajo.
 5. Ejecutar `init.sh` desde **RDSV-OSM**
 6. Ejecutar `source .env` dede **RDSV-OSM** para exportar al entorno las variables creadas en el script anterior.
 
+Para parar el escenario y borrar todo lo relacionado con osm (instancias, descriptores, repo):
+0. Ejecutar `source .env` dede **RDSV-OSM**. Si no se ha realizado antes.
+1. Ejecutar `down.sh` desde **RDSV-OSM**.
+2. Ejecutar `vnxstop.sh`desde **RDSV-K8S**.
+
 ### `vbstart.sh` script
 
-Este script arranca las máquinas virtualbox. Ejecutar desde el **PC anfitrión**.
+Ejecutar desde el **PC anfitrión**.
+
+Este script arranca las máquinas virtualbox. 
 
 Para ello, comprueba si las máquinas virtuales están importadas y paradas, crea las carpetas compartidas y arranca las máquinas.
 
 ### `vnxstart.sh` script
 
-Este script arranca los escenarios home y server VNX. Ejecutar desde **RDSV-K8S**
+Ejecutar desde **RDSV-K8S**
+
+Este script arranca los escenarios home y server VNX. 
 
 Para ello, aumenta lo límites inotify (max_user_instances) para evitar errores con DHCP, a través de VNX arranca los escenarios y permite acceso a las aplicaciones con entorno gráfico desde las máquinas arrancadas con VNX.
 
 ### `init.sh` script
 
-Es el script principal. Ejecutar desde **RDSV-OSM**
+Ejecutar desde **RDSV-OSM**
 
-TODO
+Es el script que configura OSM (instancias, descriptores, paquetes) y orquesta los pods de kubernetes KNF:ACCESS y KNF:CPE.
+
+Para ello:
+- Recupera la variable OSMNS (el namespace del cluster)
+- Crea el repositorio HELM
+- Añade los paquetes VNF y el paquete NS
+- Crea las instancias de renes1 y renes2. Para cada instancia:
+    - TODO (renes_start)
+    - Configura el controlador SDN Ryu en KNF:ACCESS
+    - TODO (renes_start)
+- Configura QoS en los pods KNF:ACCESS
+- Configura ARPWATCH en los pods KNF:CPE
+
+
+### `vnxstop.sh` script
+
+Ejecutar desde **RDSV-K8S**
+
+Este script para los escenarios home y server VNX. 
+
+### `down.sh` script
+
+Ejecutar desde **RDSV-OSM**
+
+Es el script que para todo lo relacionado con OSM (instancias, descriptores, paquetes).

@@ -12,11 +12,13 @@ function exportVar () {
 ####### * CLUSTER #######
 # ID cluster - Asignar valor a KID:
 exportVar KID a1337fb3-21d9-4952-bf58-8265b750f4d0     # Parece que siempre es el mismo
-# Si se ve que cambia, recuperar el campo de: osm k8scluster-list
+# Si no, este comando lo recupera
+# exportVar KID osm k8scluster-list --literal | grep _id | awk '{split($0,a,": ");print a[2]}'
 
 # Namespace cluster - Asignar valor a OSMNS:
 exportVar OSMNS 7b2950d8-f92b-4041-9a55-8d1837ad7b0a    # Parece que siempre es el mismo
-# Si se ve que cambia, recuperar el campo de: osm k8scluster-show --literal $KID | grep -A1 projects
+# Si no, este comando lo recupera
+# exportVar OSMNS osm k8scluster-show --literal $KID | grep -A1 projects_read | awk '{split($0,a,"- ");print a[2]}'
 
 ####### * PASOS PRELIMINARES #######
 # Crear K8s repos con info helm
@@ -27,6 +29,13 @@ exportVar OSMNS 7b2950d8-f92b-4041-9a55-8d1837ad7b0a    # Parece que siempre es 
 ####### * INSTANCIAS RENES1 y RENES2 - CREACIÓN Y CONFIGURACIÓN ########
 ./bin/renes1.sh
 ./bin/renes2.sh
+
+
+####### * CONFIGURACIÓN QoS ########
+
+
+
+####### * ARPWATCH ########
 
 # TODO:
 
