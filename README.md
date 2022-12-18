@@ -13,21 +13,23 @@ En el fichero `doc/Enunciado.pdf` se encuentra el enunciado del trabajo.
 ## Guía de uso
 
 0. OVA importado desde virtualbox.
-1. Ejecutar `vbstart.sh` desde el **PC anfitrión**
-2. Ejecutar desde **RDSV-K8S**:
+1. Ejecutar `vbstart.sh` desde el **PC anfitrión**.
+2. [OPCIONAL] Ejecutar desde **RDSV-K8S**:
     - `sudo vnx --modify-rootfs /usr/share/vnx/filesystems/vnx_rootfs_lxc_ubuntu64-20.04-v025-vnxlab/`
     - Hacer login con root/xxxx
     - `apt-get install iperf3`
     - `halt -p`
 3. Ejecutar `vnxstart.sh` desde **RDSV-K8S**
 4. Desde el **PC anfitrión**: `ssh -l upm 192.168.56.12  # password: xxxx`
+5. [OPCIONAL] Ejecutar `wait_osm.sh` en **RDSV-OSM** y esperar a que OSM se despliegue completamente.
 5. Ejecutar `init.sh` desde **RDSV-OSM**
-6. Ejecutar `source .env` dede **RDSV-OSM** para exportar al entorno las variables creadas en el script anterior.
+6. [OPCIONAL] Ejecutar `source .env` dede **RDSV-OSM** para exportar al entorno las variables creadas en el script anterior.
 
 Para parar el escenario y borrar todo lo relacionado con osm (instancias, descriptores, repo):
 0. Ejecutar `source .env` dede **RDSV-OSM**. Si no se ha realizado antes.
 1. Ejecutar `down.sh` desde **RDSV-OSM**.
 2. Ejecutar `vnxstop.sh`desde **RDSV-K8S**.
+3. Ejecutar `vbstop.sh` desde el **PC anfitrión**.
 
 ### `vbstart.sh` script
 

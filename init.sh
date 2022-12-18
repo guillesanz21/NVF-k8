@@ -28,6 +28,8 @@ exportVar OSMNS ${OSMNS}
 # Añadir paquetes a OSM Packages VNF y NS
 ./bin/pkgs-create.sh
 
+sleep 5
+
 ####### * INSTANCIAS RENES1 y RENES2 - CREACIÓN Y CONFIGURACIÓN ########
 ./bin/renes1.sh
 ./bin/renes2.sh

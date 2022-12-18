@@ -38,24 +38,30 @@ function renes1 () {
 }
 function deleteRenes1 () {
     STATUS=""
-    osm ns-delete ${NSID1}
+    osm ns-delete --force ${1}
+    renes=$(osm ns-list | grep renes1)
+    while [[ ! -z "${renes}" ]]; do
+        osm ns-delete --force renes1
+        sleep 3
+        renes=$(osm ns-list | grep renes1)
+    done
 }
 renes1
 if [[ "$STATUS" =~ .*"BUILDING".* || "$STATUS" =~ .*"BROKEN".* ]]; then
     echo "...La instancia renes1 no se ha podido crear."
     echo "...Intentándolo por última vez..."
-    deleteRenes1
+    deleteRenes1 ${NSID1}
     renes1 
 fi
 if [[ "$STATUS" =~ .*"BUILDING".* || "$STATUS" =~ .*"BROKEN".* ]]; then
     echo "No se ha podido crear la instancia renes1. Terminando el proceso..."
-    deleteRenes1
+    deleteRenes1 ${NSID1}
     exit 1
 elif [[ "$STATUS" =~ .*"READY".* ]]; then
     echo "La instancia renes1 se ha creado con éxito"
 else 
     echo "La instancia renes1 está en un estado desconocido: ${STATUS}. Terminando el proceso..."
-    deleteRenes1
+    deleteRenes1 ${NSID1}
     exit 1
 fi
 

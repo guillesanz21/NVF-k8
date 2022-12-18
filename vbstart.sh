@@ -29,7 +29,6 @@ echo "Las máquinas virtuales están importadas y paradas, continuando ejecució
 
 ## Shared folders
 echo "Creando las carpetas compartidas..."
-# TODO: Comprobar que la MV no está parada con estado almacenado antes de borrar y crear las carpetas
 # Elimina (si existen) las carpetas compartidas
 vboxmanage sharedfolder remove RDSV-OSM --name shared 2> /dev/null
 vboxmanage sharedfolder remove RDSV-K8S --name shared 2> /dev/null

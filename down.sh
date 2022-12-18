@@ -6,8 +6,25 @@ set +a
 
 ####### * INSTANCIAS RENES1 y RENES2 - DESTRUCCIÓN ########
 echo "Borrando las instancias renes1 y renes2..."
-osm ns-delete ${NSID1} > /dev/null
-osm ns-delete ${NSID2} > /dev/null
+function forceDelete() {
+    osm ns-delete --force renes1 > /dev/null
+    osm ns-delete --force renes2 > /dev/null
+}
+function getNS() {
+    renes=$(osm ns-list | grep renes)
+}
+if [[ "${1}" == "--force" ]]; then
+    getNS
+    while [[ ! -z "${renes}" ]]; do
+        forceDelete
+        sleep 3
+        getNS
+    done
+
+else
+    osm ns-delete ${NSID1} > /dev/null
+    osm ns-delete ${NSID2} > /dev/null
+fi
 
 
 ####### * PAQUETES / DESCRIPTORES OSM - BORRADO #######
