@@ -77,6 +77,18 @@ sleep 2
 
 # # Tráfico subida
 # echo "Configurando QoS para el tráfico de subida..."
+# TODO:
+
+
+# Recuperar reglas QoS
+echo "Colas QoS configuradas: "
+$ACC_EXEC curl --silent -X GET http://localhost:8080/qos/rules/0000000000000001
+echo ""
+echo ""
+
+
+# TODO: Para el tráfico de subida, mirar dos opciones: configurar QoS en el switch KNF:access o configurar en brg1:
+# TODO OPCION: KNF:access. 
 # $ACC_EXEC curl --silent -X POST -d '{"port_name": "vxlanint", "type": "linux-htb", "max_rate": "6000000", "queues": [{"min_rate": "4000000"}, {"max_rate": "2000000"}]}' http://localhost:8080/qos/queue/0000000000000001
 # echo ""
 # sleep 5
@@ -87,38 +99,17 @@ sleep 2
 # echo ""
 # sleep 2
 
-
-# Recuperar reglas QoS
-echo "Colas QoS configuradas: "
-$ACC_EXEC curl --silent -X GET http://localhost:8080/qos/rules/0000000000000001
-
-# TODO: Para el tráfico de subida, mirar dos opciones: configurar QoS en el switch ryu con "port_name": "vxlanint", o configurar en brg1:
-
-# TODO OPCION: ryu. 
-# $ACC_EXEC curl -X POST -d '{"port_name": "vxlanint", "type": "linux-htb", "max_rate": "6000000", "queues": [{"min_rate": "4000000"}, {"max_rate": "2000000"}]}' http://localhost:8080/qos/queue/0000000000000001
-
-# $ACC_EXEC curl -X POST -d '{"match": {"nw_src": "'$IPhx1'"}, "actions":{"queue": "0"}}' http://localhost:8080/qos/rules/0000000000000001
-# $ACC_EXEC curl -X POST -d '{"match": {"nw_src": "'$IPhx2'"}, "actions":{"queue": "1"}}' http://localhost:8080/qos/rules/0000000000000001
-
-# TODO OPCIÓN: brg1: QoS. Probablemente haga falta meter los comandos en el lxc_ubuntu.xml
+# TODO OPCIÓN: brg1. Hará falta meter los comandos en el lxc_ubuntu.xml, en brg1 y brg2 (en brg2 no meter la parte de QoS)
 # De LXC:
 # ovs-vsctl add-br br0
 # ovs-vsctl add-port br0 eth1
 # ovs-vsctl add-port br0 vxlan1 -- set interface vxlan1 type=vxlan options:remote_ip=10.255.0.1
 
 # Probar:
-# ovs-vsctl set-manager ptcp:6632
+# Introducir comandos de "set-controller", "set-manager" y todo eso.
+# Checkear que IPs debo introducir
 # curl -X PUT -d '"tcp:127.0.0.1:6632"' http://10.255.0.1:8080/v1.0/conf/switches/0000000000000001/ovsdb_addr
 # curl -X POST -d '{"port_name": "vxlan1", "type": "linux-htb", "max_rate": "6000000", "queues": [{"min_rate": "4000000"}, {"max_rate": "2000000"}]}' http://localhost:8080/qos/queue/0000000000000001
-# curl -X POST -d '{"match": {????????????}, "actions":{"queue": "0"}}' http://localhost:8080/qos/rules/0000000000000001
-# curl -X POST -d '{"match": {????????????}, "actions":{"queue": "1"}}' http://localhost:8080/qos/rules/0000000000000001
+# curl -X POST -d '{"match": {"match": {"nw_src": "'$IPhx1'"}, "actions":{"queue": "0"}}' http://localhost:8080/qos/rules/0000000000000001
+# curl -X POST -d '{"match": {"match": {"nw_src": "'$IPhx2'"}, "actions":{"queue": "1"}}' http://localhost:8080/qos/rules/0000000000000001
 
-
-
-
-# MAC H11 "dl_src": "02:fd:00:04:00:01"
-# MAX H12 "dl_src": "02:fd:00:04:01:01"
-
-# Para la red residencial: 12 Mbps de bajada (y 6 Mbps de subida)
-# § Para hX1: 8 Mbps mínimo de bajada (y 4 Mbps mínimo de subida)
-# § Para hX2: 4 Mbps máximo de bajada (y 2 Mbps máximo de subida)

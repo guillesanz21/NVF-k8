@@ -95,6 +95,8 @@ $CPE_EXEC /usr/bin/vnx_config_nat brint net1
 echo "7. En VNF:access configurar el controlador SDN Ryu y aplicar QoS"
 ./bin/ryu_qos.sh
 
-### 8. En VNF:cpe activar la captura de trafico ARP mediante arpwatch
-echo "8. En VNF:cpe activar la captura de trafico ARP mediante arpwatch"
-# ./bin/arpwatch.sh
+### 8. En VNF:cpe configurar pasos necesarios para activar arpwatch
+echo "8. En VNF:cpe configurar pasos necesarios para activar arpwatch"
+$CPE_EXEC touch /var/lib/arpwatch/arp.dat
+
+echo "LISTO"

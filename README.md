@@ -24,6 +24,7 @@ En el fichero `doc/Enunciado.pdf` se encuentra el enunciado del trabajo.
 5. [OPCIONAL] Ejecutar `wait_osm.sh` en **RDSV-OSM** y esperar a que OSM se despliegue completamente.
 5. Ejecutar `init.sh` desde **RDSV-OSM**
 6. [OPCIONAL] Ejecutar `source .env` dede **RDSV-OSM** para exportar al entorno las variables creadas en el script anterior.
+7. [OPCIONAL] Ejecutar `arpwatch_show.sh [CPE1|CPE2]` en **RDSV-OSM**
 
 Para parar el escenario y borrar todo lo relacionado con osm (instancias, descriptores, repo):
 0. Ejecutar `source .env` dede **RDSV-OSM**. Si no se ha realizado antes.

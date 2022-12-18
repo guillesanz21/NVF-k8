@@ -30,4 +30,7 @@ COPY dhcpd.conf /etc/dhcp/dhcpd.conf
 COPY README.txt /home/README.txt
 # COPY qos_simple_switch_13.py /home/qos_simple_switch_13.py
 
+# Ryu
 RUN sed '/OFPFlowMod(/,/)/s/)/, table_id=1)/' usr/lib/python3/dist-packages/ryu/app/simple_switch_13.py > /home/qos_simple_switch_13.py
+# Arpwatch
+RUN echo $' \nARGS="-N -p"\nRUNAS="arpwatch"\nINTERFACES="brint net1"' > /etc/default/arpwatch
